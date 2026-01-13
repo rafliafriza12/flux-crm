@@ -29,29 +29,43 @@ html.lenis body {
 }
 
 :root {
-  --background: ;
-  --foreground: ;
-  --primary: ;
-  --brand: ;
-  --deep: ;
+  --background: #f6f8fa;
+  --foreground: #eceff3;
+  --primary: #9fe870;
+  --secound: #204e4d;
+  --text: #000000;
+  --placeholder: #666d80;
+  --border: #dfe1e7;
 
-  --secound: ;
+  /* dark */
+  --background-dark: #1a1b25;
+  --foreground-dark: #272835;
+  --primary-dark: #9fe870;
+  --secound-dark: #204e4d;
+  --text-dark: #f8fafb;
+  --placeholder-dark: #c1c7d0;
+  --border-dark: #36394a;
 }
 
 @theme inline {
+  --font-plus-jakarta-sans: "Plus Jakarta Sans", sans-serif;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-parkinsans: "Parkinsans", sans-serif;
-  --font-be-vietnam-pro: "Be Vietnam Pro", sans-serif;
-  --font-rubik: "Rubik", sans-serif;
-  --font-open-sans: "Open Sans", sans-serif;
-  --font-mona-sans: "Mona Sans", sans-serif;
-  --font-montserrat: "Montserrat", sans-serif;
-
   --color-primary: var(--primary);
-  --color-brand: var(--brand);
-  --color-deep: var(--deep);
+  --color-text: var(--text);
   --color-secound: var(--secound);
+  --color-placeholder: var(--placeholder);
+  --color-border: var(--border);
+  /* dark */
+  --color-background-dark: var(--background-dark);
+  --color-foreground-dark: var(--foreground-dark);
+  --color-primary-dark: var(--primary-dark);
+  --color-text-dark: var(--text-dark);
+  --color-secound-dark: var(--secound-dark);
+  --color-placeholder-dark: var(--placeholder-dark);
+  --color-border-dark: var(--border-dark);
+
   --breakpoint-sm: 640px;
   --breakpoint-md: 768px;
   --breakpoint-ipad-vertical: 768px;
@@ -59,32 +73,6 @@ html.lenis body {
   --breakpoint-lg: 1400px;
   --breakpoint-xl: 1536px;
   --breakpoint-2xl: 2560px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-/* Dark mode support */
-.dark {
-  --background: #0f083b;
-  --foreground: #ededed;
-  --primary: #7f3aa1;
-  --brand: #5416b5;
-  --deep: #0a062a;
-  --secound: #ffffff;
-}
-
-.light {
-  --background: #ededed;
-  --foreground: #171717;
-  --primary: #7f3aa1;
-  --brand: #3e3e3e;
-  --deep: #252525;
-  --secound: #ffffff;
 }
 
 body {

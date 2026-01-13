@@ -6,8 +6,10 @@ import {
   Button,
   EmailInput,
   Heading1,
+  Input,
   PasswordInput,
 } from "@/components";
+import Modal from "@/components/molecules/Modal/Modal";
 import { cn } from "@/lib";
 import { useAuth } from "@/providers";
 import Image from "next/image";
@@ -15,29 +17,39 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 
-const LoginForm: React.FC = () => {
-  const { login, isLoading } = useAuth();
+const RegisterForm: React.FC = () => {
+  const { register, isLoading } = useAuth();
   const router = useRouter();
   const [formInput, setFormInput] = useState({
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    const result = await login({
+    const result = await register({
+      firstName: formInput.firstName,
+      lastName: formInput.lastName,
       email: formInput.email,
       password: formInput.password,
     });
 
     if (result.success) {
-      router.push("/");
+      setIsOpen(true);
     } else {
       setError(result.message);
     }
+  };
+
+  const handleModalAction = () => {
+    setIsOpen(false);
+    router.push("/login");
   };
 
   return (
@@ -49,16 +61,28 @@ const LoginForm: React.FC = () => {
         "dark:bg-background-dark dark:text-text-dark dark:shadow-[inset_0_-4px_24px_#B0B0B040]"
       )}
     >
+      <Modal
+        type="success"
+        title="Congratulations, You're In"
+        subtitle="Let's get started and take your customer engagement to 
+the next level!"
+        buttonText="Get Started"
+        isOpen={isOpen}
+        close={() => setIsOpen(false)}
+        action={handleModalAction}
+      />
       <div className="flex flex-col gap-3 items-center">
-        <Heading1 className="tracking-[-1px]">Hi, Welcome</Heading1>
+        <Heading1 className="tracking-[-1px] ipad-vertical:text-[32px]!">
+          Create Your Account
+        </Heading1>
         <BodyMediumMedium
           className={cn(
-            "font-medium text-placeholder text-center",
+            "text-center",
             "text-placeholder",
             "dark:text-placeholder-dark"
           )}
         >
-          Please login to your account
+          Please input to your account
         </BodyMediumMedium>
       </div>
       <div className="w-full flex flex-col gap-6 items-center">
@@ -67,6 +91,30 @@ const LoginForm: React.FC = () => {
             {error}
           </div>
         )}
+        <div className="w-full grid grid-cols-1 ipad-horizontal:grid-cols-2 gap-6 ipad-horizontal:gap-3">
+          <Input
+            value={formInput.firstName}
+            onChange={(e) =>
+              setFormInput((prev) => ({ ...prev, firstName: e.target.value }))
+            }
+            label="First Name"
+            type="text"
+            required
+            icon="user-3-line"
+            helperText="Input your first name"
+          />
+          <Input
+            value={formInput.lastName}
+            onChange={(e) =>
+              setFormInput((prev) => ({ ...prev, lastName: e.target.value }))
+            }
+            label="Last Name"
+            type="text"
+            required
+            icon="user-3-line"
+            helperText="Input your Last name"
+          />
+        </div>
         <EmailInput
           required
           value={formInput.email}
@@ -92,41 +140,12 @@ const LoginForm: React.FC = () => {
             disabled={
               formInput.email === "" || formInput.password === "" || isLoading
             }
-            className=" w-full  rounded-full hover:bg-primary/80 duration-300 "
+            className=" w-full  rounded-full hover:bg-primary/80 duration-300 py-"
           >
             <BodySmallMedium>
-              {isLoading ? "Loading..." : "Login"}
+              {isLoading ? "Loading..." : "Register"}
             </BodySmallMedium>
           </Button>
-          <div className="w-full flex items-end justify-between text-placeholder dark:text-placeholder-dark">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input type="checkbox" className="peer sr-only" />
-
-              <div className="w-4 h-4 rounded-xs border border-default-medium flex items-center justify-center peer-checked:bg-primary peer-checked:border-primary transition">
-                <svg
-                  className=" text-background dark:text-background-dark pointer-events-none"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M5 13l4 4L19 7"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </div>
-
-              <BodySmallMedium>Remember me</BodySmallMedium>
-            </label>
-
-            <Link href={"/forgot-password"}>
-              <BodySmallMedium>Forgot password?</BodySmallMedium>
-            </Link>
-          </div>
         </div>
       </div>
       <div className=" w-full flex justify-center items-center relative z-0">
@@ -137,7 +156,7 @@ const LoginForm: React.FC = () => {
             "dark:text-placeholder-dark dark:bg-background-dark"
           )}
         >
-          Or Sign in with
+          Or Sign up with
         </p>
         <div className="w-full absolute z-1 h-px border-t border-border dark:border-border-dark"></div>
       </div>
@@ -145,7 +164,7 @@ const LoginForm: React.FC = () => {
         <Button
           type="button"
           variant="outline"
-          className="w-full  dark:text-text-dark!"
+          className="w-full dark:text-text-dark!"
         >
           <Image
             src={"/icon/google.png"}
@@ -153,12 +172,12 @@ const LoginForm: React.FC = () => {
             width={24}
             height={24}
           />
-          <BodyMediumRegular>Sign in with Google</BodyMediumRegular>
+          <BodyMediumRegular>Sign up with Google</BodyMediumRegular>
         </Button>
         <Button
           type="button"
           variant="outline"
-          className="w-full dark:text-text-dark! "
+          className="w-full dark:text-text-dark!"
         >
           <Image
             src={"/icon/apple.png"}
@@ -167,17 +186,17 @@ const LoginForm: React.FC = () => {
             height={24}
             className="dark:invert-[1]"
           />
-          <BodyMediumRegular>Sign in with Apple</BodyMediumRegular>
+          <BodyMediumRegular>Sign up with Apple</BodyMediumRegular>
         </Button>
       </div>
       <BodySmallMedium className=" flex items-center gap-1">
-        Don&apos;t have an account?{" "}
-        <Link href={"/register"}>
-          <span className="text-primary">Sign up</span>
+        Already have an account?
+        <Link href={"/login"}>
+          <span className="text-primary">Sign in</span>
         </Link>
       </BodySmallMedium>
     </form>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

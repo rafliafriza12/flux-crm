@@ -21,9 +21,9 @@ function MainLayout({
   showFooter = true,
 }: MainLayoutProps) {
   return (
-    <div className="flex min-h-svh flex-col bg-background">
+    <div className="w-full min-h-svh bg-background p-8">
       {showHeader && <Header />}
-      <main className={cn("flex-1", className)}>{children}</main>
+      <main className={cn("", className)}>{children}</main>
       {showFooter && <Footer />}
     </div>
   );

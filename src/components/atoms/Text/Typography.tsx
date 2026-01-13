@@ -8,7 +8,7 @@ interface TypographyProps {
 export function Heading1({ children, className = "" }: TypographyProps) {
   return (
     <h1
-      className={` text-[32px] ipad-vertical:text-5xl font-light leading-[120%] ${className}`}
+      className={` text-[32px] ipad-vertical:text-[40px]  leading-[120%] font-medium ${className}`}
     >
       {children}
     </h1>
@@ -18,7 +18,7 @@ export function Heading1({ children, className = "" }: TypographyProps) {
 export function Heading2({ children, className = "" }: TypographyProps) {
   return (
     <h2
-      className={`font-light text-[32px] ipad-vertical:text-[40px] leading-[120%] ${className}`}
+      className={`font-light text-2xl ipad-vertical:text-[32px]  leading-[120%] ${className}`}
     >
       {children}
     </h2>
@@ -63,6 +63,17 @@ export function BodyXSmallRegular({
   className = "",
 }: TypographyProps) {
   return <p className={`text-xs leading-[155%]  ${className}`}>{children}</p>;
+}
+
+export function BodyXSmallMedium({
+  children,
+  className = "",
+}: TypographyProps) {
+  return (
+    <p className={`text-xs leading-[155%] font-medium  ${className}`}>
+      {children}
+    </p>
+  );
 }
 
 export function BodySmallMedium({ children, className = "" }: TypographyProps) {

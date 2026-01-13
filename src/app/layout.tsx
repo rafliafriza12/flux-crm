@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
 import { AppProviders } from "@/providers/app-providers";
 import "@/styles/globals.css";
-import {
-  rubik,
-  openSans,
-  parkinsans,
-  monaSans,
-  montserrat,
-  beVietnamPro,
-} from "@/styles/fonts";
+import { plusJakartaSans } from "@/styles/fonts";
 
 export const metadata: Metadata = {
   title: "Gutech | Software House",
@@ -24,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${montserrat.variable} ${beVietnamPro.variable} ${parkinsans.variable} ${rubik.variable} ${openSans.variable} ${monaSans.variable} antialiased font-montserrat`}
+        className={`${plusJakartaSans.variable} antialiased font-plus-jakarta-sans`}
       >
         <AppProviders>{children}</AppProviders>
       </body>

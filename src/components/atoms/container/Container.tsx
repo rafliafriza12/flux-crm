@@ -9,7 +9,7 @@ const Container: React.FC<ContainerProps> = ({ children, className }) => {
   return (
     <div
       className={cn(
-        "max-w-384 mx-auto p-5 ipad-vertical:px-7.5 ipad-vertical:py-7.5 lg:px-20 lg:py-20 font-parkinsans",
+        " p-5 ipad-vertical:p-5 lg:p-10 font-parkinsans",
         className
       )}
     >

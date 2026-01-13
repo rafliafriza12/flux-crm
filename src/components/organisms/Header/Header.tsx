@@ -4,7 +4,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/atoms/Button";
 import { Avatar } from "@/components/atoms/Avatar";
-import { useTheme } from "@/providers/theme-provider";
+// import { useTheme } from "@/providers/theme-provider";
 import { useAuth } from "@/providers/auth-provider";
 import { APP_CONFIG, ROUTES } from "@/config/app.config";
 import { HeaderNavigate } from "@/config";
@@ -18,7 +18,7 @@ export interface HeaderProps {
 }
 
 function Header({ className }: HeaderProps) {
-  const { setTheme, resolvedTheme } = useTheme();
+  // const { setTheme, resolvedTheme } = useTheme();
   const { user, isAuthenticated, logout } = useAuth();
   const pathname = usePathname();
 
@@ -47,9 +47,9 @@ function Header({ className }: HeaderProps) {
     };
   }, [lastScrollY]);
 
-  const toggleTheme = () => {
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
-  };
+  // const toggleTheme = () => {
+  //   setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  // };
 
   return (
     <header
@@ -101,7 +101,7 @@ function Header({ className }: HeaderProps) {
           )}
         </nav>
 
-        <div className="flex items-center gap-3">
+        {/* <div className="flex items-center gap-3">
           <Button
             variant="ghost"
             size="sm"
@@ -131,7 +131,7 @@ function Header({ className }: HeaderProps) {
               </Link>
             </div>
           )}
-        </div>
+        </div> */}
       </Container>
     </header>
   );

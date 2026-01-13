@@ -6,24 +6,31 @@ import {
   type ReactNode,
   useCallback,
   useMemo,
+  useState,
+  useEffect,
 } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { authService } from "@/services/auth.service";
-import { QUERY_KEYS } from "@/config/app.config";
+import { dummyAuthService } from "@/services/dummy-auth.service";
 import type {
+  User,
   LoginCredentials,
   RegisterCredentials,
-  AuthState,
 } from "@/types/user.types";
 
 /**
  * Auth Provider
- * Provides authentication context and methods
+ * Provides authentication context and methods using dummy service
  */
 
-interface AuthContextType extends AuthState {
-  login: (credentials: LoginCredentials) => Promise<void>;
-  register: (data: RegisterCredentials) => Promise<void>;
+interface AuthContextType {
+  user: User | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  login: (
+    credentials: LoginCredentials
+  ) => Promise<{ success: boolean; message: string }>;
+  register: (
+    data: RegisterCredentials & { firstName?: string; lastName?: string }
+  ) => Promise<{ success: boolean; message: string }>;
   logout: () => Promise<void>;
 }
 
@@ -34,65 +41,60 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const queryClient = useQueryClient();
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Get current user query
-  const { data: user, isLoading } = useQuery({
-    queryKey: QUERY_KEYS.AUTH.USER,
-    queryFn: async () => {
-      const response = await authService.getCurrentUser();
-      return response.data;
-    },
-    enabled:
-      typeof window !== "undefined" && !!localStorage.getItem("access_token"),
-    retry: false,
-  });
+  // Check authentication status on mount
+  useEffect(() => {
+    const currentUser = dummyAuthService.getCurrentUser();
+    setUser(currentUser);
+    setIsLoading(false);
+  }, []);
 
   const isAuthenticated = useMemo(() => !!user, [user]);
 
-  // Login mutation
-  const loginMutation = useMutation({
-    mutationFn: authService.login,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.AUTH.USER });
-    },
-  });
-
-  // Register mutation
-  const registerMutation = useMutation({
-    mutationFn: authService.register,
-  });
-
-  // Logout mutation
-  const logoutMutation = useMutation({
-    mutationFn: authService.logout,
-    onSuccess: () => {
-      queryClient.clear();
-    },
-  });
-
-  const login = useCallback(
-    async (credentials: LoginCredentials) => {
-      await loginMutation.mutateAsync(credentials);
-    },
-    [loginMutation]
-  );
+  const login = useCallback(async (credentials: LoginCredentials) => {
+    setIsLoading(true);
+    try {
+      const result = await dummyAuthService.login(credentials);
+      if (result.success && result.data) {
+        setUser(result.data.user);
+      }
+      return { success: result.success, message: result.message };
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   const register = useCallback(
-    async (data: RegisterCredentials) => {
-      await registerMutation.mutateAsync(data);
+    async (
+      data: RegisterCredentials & { firstName?: string; lastName?: string }
+    ) => {
+      setIsLoading(true);
+      try {
+        const result = await dummyAuthService.register(data);
+        return { success: result.success, message: result.message };
+      } finally {
+        setIsLoading(false);
+      }
     },
-    [registerMutation]
+    []
   );
 
   const logout = useCallback(async () => {
-    await logoutMutation.mutateAsync();
-  }, [logoutMutation]);
+    setIsLoading(true);
+    try {
+      await dummyAuthService.logout();
+      setUser(null);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   return (
     <AuthContext.Provider
       value={{
-        user: user ?? null,
+        user,
         isAuthenticated,
         isLoading,
         login,

@@ -1,19 +1,8 @@
 "use client";
 
-import {
-  AboutSection,
-  CtaSection,
-  FeatureSection,
-  HeroSection,
-  HowItWorkSection,
-  InsightsSection,
-  ProjectSection,
-  TestimonialsSection,
-} from "@/components";
-import { MainLayout } from "@/components/templates/MainLayout";
-import Image from "next/image";
-import Link from "next/link";
+import { FeatureSection } from "@/components";
 import { useEffect, useState } from "react";
+import PrivateLayout from "./(private)/layout";
 
 export default function HomePage() {
   const fullText = "We're crafting something amazing for you.";
@@ -49,16 +38,16 @@ export default function HomePage() {
   }, [displayedText, isDeleting, loopNum, typingSpeed]);
 
   return (
-    <MainLayout>
-      <HeroSection />
+    <PrivateLayout>
+      {/* <HeroSection /> */}
       <FeatureSection />
-      <AboutSection />
+      {/* <AboutSection />
       <HowItWorkSection />
       <ProjectSection />
       <InsightsSection />
       <TestimonialsSection />
-      <CtaSection />
-    </MainLayout>
+      <CtaSection /> */}
+    </PrivateLayout>
   );
 }
 

@@ -3,3 +3,5 @@ export * from "./Footer";
 export * from "./Sidebar";
 export * from "./LoginForm";
 export * from "./Section/LandingPage";
+export * from "./RegisterForm";
+export * from "./ForgotPasswordForm";

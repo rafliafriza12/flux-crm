@@ -1,3 +1,4 @@
+"use client";
 import { forwardRef, type InputHTMLAttributes, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/atoms/Input";

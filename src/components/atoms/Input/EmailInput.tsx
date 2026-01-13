@@ -1,11 +1,5 @@
 "use client";
-import {
-  Dispatch,
-  forwardRef,
-  SetStateAction,
-  useState,
-  type InputHTMLAttributes,
-} from "react";
+import { forwardRef, useState, type InputHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 import { Icon } from "../Icon";
 import { BodySmallMedium } from "../Text";
@@ -15,17 +9,21 @@ import { BodySmallMedium } from "../Text";
  * Email input field with mail icon prefix
  */
 
-export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, ""> {
+interface ILoginInput {
+  email: string;
+  password: string;
+}
+
+export interface EmailInputProps
+  extends Omit<InputHTMLAttributes<HTMLInputElement>, "type"> {
   label?: string;
   error?: string;
   helperText?: string;
   className?: string;
-  icon?: string;
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, helperText, icon, id, ...props }, ref) => {
+const EmailInput = forwardRef<HTMLInputElement, EmailInputProps>(
+  ({ className, label, error, helperText, id, ...props }, ref) => {
     const inputId = id || label?.toLowerCase().replace(/\s+/g, "-") || "email";
     const [isFocus, setIsfocus] = useState<boolean>(false);
 
@@ -45,16 +43,15 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
               : "border-border dark:border-border-dark"
           } rounded-full px-3 py-2 gap-2 duration-300 bg-[#F8FAFB] dark:bg-[#0D0D12]`}
         >
-          {icon && (
-            <Icon
-              name={icon}
-              size="lg"
-              className="text-placeholder dark:text-placeholder-dark"
-            />
-          )}
+          <Icon
+            name="mail-line"
+            size="lg"
+            className="text-placeholder dark:text-placeholder-dark"
+          />
           <input
             onFocus={() => setIsfocus(true)}
             onBlur={() => setIsfocus(false)}
+            type="email"
             ref={ref}
             id={inputId}
             placeholder={helperText}
@@ -71,6 +68,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   }
 );
 
-Input.displayName = "Input";
+EmailInput.displayName = "EmailInput";
 
-export { Input };
+export { EmailInput };

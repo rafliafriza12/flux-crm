@@ -8,12 +8,9 @@ export interface User {
   email: string;
   name: string;
   avatar?: string;
-  role: UserRole;
   createdAt: string;
   updatedAt: string;
 }
-
-export type UserRole = "admin" | "user" | "guest";
 
 export interface LoginCredentials {
   email: string;
@@ -23,7 +20,8 @@ export interface LoginCredentials {
 export interface RegisterCredentials {
   email: string;
   password: string;
-  name: string;
+  firstName: string;
+  lastName: string;
 }
 
 export interface AuthTokens {

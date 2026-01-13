@@ -1,127 +1,93 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-import { createPortal } from "react-dom";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/atoms/Button";
-
-/**
- * Modal Component - Molecule
- * A dialog component for displaying content in an overlay
- */
-
-export interface ModalProps {
+import { BodyMediumMedium, Button, Heading2, Icon } from "@/components/atoms";
+import Container from "@/components/atoms/container/Container";
+interface IModalProps {
+  type: "success" | "failed" | "warning" | "delete";
+  title: string;
+  subtitle: string;
+  buttonText: string;
+  close: () => void;
+  action: () => void;
   isOpen: boolean;
-  onClose: () => void;
-  title?: string;
-  description?: string;
-  children: React.ReactNode;
-  size?: "sm" | "md" | "lg" | "xl" | "full";
-  showCloseButton?: boolean;
-  closeOnOverlayClick?: boolean;
-  className?: string;
 }
-
-const sizeClasses = {
-  sm: "max-w-sm",
-  md: "max-w-md",
-  lg: "max-w-lg",
-  xl: "max-w-xl",
-  full: "max-w-full mx-4",
-};
-
-function Modal({
-  isOpen,
-  onClose,
+const Modal: React.FC<IModalProps> = ({
+  type,
+  action,
+  buttonText,
+  close,
+  subtitle,
   title,
-  description,
-  children,
-  size = "md",
-  showCloseButton = true,
-  closeOnOverlayClick = true,
-  className,
-}: ModalProps) {
-  const overlayRef = useRef<HTMLDivElement>(null);
+  isOpen,
+}) => {
+  const getIcon = (): string => {
+    switch (type) {
+      case "success":
+        return "check-line";
+      case "delete":
+        return "delete-bin-line";
+      case "failed":
+        return "close-line";
+      case "warning":
+        return "error-warning-line";
 
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("keydown", handleEscape);
-      document.body.style.overflow = "hidden";
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-      document.body.style.overflow = "unset";
-    };
-  }, [isOpen, onClose]);
-
-  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (closeOnOverlayClick && e.target === overlayRef.current) {
-      onClose();
+      default:
+        return "check-line";
     }
   };
 
-  if (!isOpen) return null;
+  const getBackgroundIcon = (): string => {
+    switch (type) {
+      case "success":
+        return "bg-[#40C4AA]";
+      case "delete":
+        return "bg-[#DF1C41]";
+      case "failed":
+        return "bg-[#DF1C41]";
+      case "warning":
+        return "bg-[#FAEDCC]";
 
-  return createPortal(
-    <div
-      ref={overlayRef}
-      onClick={handleOverlayClick}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+      default:
+        return "bg-[#40C4AA]";
+    }
+  };
+  return (
+    <Container
+      className={`w-full h-svh bg-[#1B1B1B]/50 backdrop-blur-[10px] fixed z-1000 inset-0 flex items-center justify-center ${
+        isOpen ? "" : "hidden"
+      }`}
     >
-      <div
-        className={cn(
-          "w-full rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900",
-          sizeClasses[size],
-          className
-        )}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={title ? "modal-title" : undefined}
-        aria-describedby={description ? "modal-description" : undefined}
-      >
-        {(title || showCloseButton) && (
-          <div className="mb-4 flex items-center justify-between">
-            {title && (
-              <h2
-                id="modal-title"
-                className="text-lg font-semibold text-gray-900 dark:text-gray-100"
-              >
-                {title}
-              </h2>
-            )}
-            {showCloseButton && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onClose}
-                className="ml-auto"
-                aria-label="Close modal"
-              >
-                <i className="ri-close-line text-lg" />
-              </Button>
-            )}
-          </div>
-        )}
-        {description && (
-          <p
-            id="modal-description"
-            className="mb-4 text-sm text-gray-500 dark:text-gray-400"
-          >
-            {description}
-          </p>
-        )}
-        {children}
+      <div className=" w-full relative z-0 ipad-vertical:max-w-125 flex flex-col p-6 items-center justify-center gap-5 rounded-[20px] bg-white dark:bg-black ">
+        <div
+          onClick={close}
+          className="absolute z-1 top-6 right-6 cursor-pointer"
+        >
+          <Icon
+            name="close-line"
+            size="xl"
+            className="text-black dark:text-white"
+          />
+        </div>
+        <div
+          className={`w-25 h-25 flex justify-center items-center rounded-full ${getBackgroundIcon()}`}
+        >
+          <Icon name={getIcon()} className="text-white text-[42px]" />
+        </div>
+        <Heading2 className="font-semibold! text-center text-black dark:text-white">
+          {title}
+        </Heading2>
+        <BodyMediumMedium className="text-center text-placeholder dark:text-placeholder-dark">
+          {subtitle}
+        </BodyMediumMedium>
+        <Button
+          onClick={action}
+          type="button"
+          variant="primary"
+          className=" w-full  rounded-full hover:bg-primary/80 duration-300 "
+        >
+          <BodyMediumMedium>{buttonText}</BodyMediumMedium>
+        </Button>
       </div>
-    </div>,
-    document.body
+    </Container>
   );
-}
+};
 
-export { Modal };
+export default Modal;
