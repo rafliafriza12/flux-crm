@@ -11,20 +11,17 @@ export interface MainLayoutProps {
   children: React.ReactNode;
   className?: string;
   showHeader?: boolean;
-  showFooter?: boolean;
 }
 
 function MainLayout({
   children,
   className,
   showHeader = true,
-  showFooter = true,
 }: MainLayoutProps) {
   return (
-    <div className="w-full min-h-svh bg-background p-8">
+    <div className="w-full min-h-svh bg-background dark:bg-background-dark ">
       {showHeader && <Header />}
-      <main className={cn("", className)}>{children}</main>
-      {showFooter && <Footer />}
+      <main className={cn("max-w-480 mx-auto", className)}>{children}</main>
     </div>
   );
 }
