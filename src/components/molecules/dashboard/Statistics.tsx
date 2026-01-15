@@ -3,7 +3,7 @@ import { DropdownButton } from "@/components/atoms/DropdownButton/DropdownButton
 
 const Statistics: React.FC = () => {
   return (
-    <div className="w-full col-span-5 bg-white dark:bg-black rounded-3xl flex flex-col p-6">
+    <div className="w-full col-span-5 bg-white dark:bg-black rounded-3xl flex flex-col p-6 border border-border dark:border-border-dark">
       <div className="w-full flex justify-between items-center">
         <Heading1 className=" font-normal!">Statistics</Heading1>
         <div className="h-14 flex items-center gap-3">
