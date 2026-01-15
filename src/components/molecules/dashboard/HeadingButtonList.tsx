@@ -3,9 +3,9 @@ import { DropdownButton } from "@/components/atoms/DropdownButton/DropdownButton
 
 const HeadingButtonList: React.FC = () => {
   return (
-    <div className="flex items-center gap-3 h-14">
+    <div className="flex items-center gap-1 ipad-vertical:gap-3 h-10.5 ipad-vertical:h-14">
       <DropdownButton defaultOption="Monthly" options={["Daily", "Monthly"]} />
-      <div className="h-full px-6 rounded-full flex items-center justify-center gap-2.5 bg-foreground dark:bg-foreground-dark">
+      <div className="h-full w-10.5 ipad-vertical:w-auto ipad-vertical:px-6 rounded-full flex items-center justify-center gap-2.5 bg-foreground dark:bg-foreground-dark">
         <svg
           width="24"
           height="24"
@@ -22,10 +22,12 @@ const HeadingButtonList: React.FC = () => {
           />
         </svg>
 
-        <BodyMediumMedium>Export</BodyMediumMedium>
+        <BodyMediumMedium className="hidden ipad-vertical:block">
+          Export
+        </BodyMediumMedium>
       </div>
-      <div className="h-full p-1 pr-4 rounded-full flex items-center justify-center gap-2.5 bg-[#204E4D]">
-        <div className="w-12 h-12 rounded-full bg-primary flex justify-center items-center">
+      <div className="h-full ipad-vertical:p-1 ipad-vertical:pr-4 rounded-full flex items-center justify-center gap-2.5 bg-[#204E4D]">
+        <div className="h-full w-10.5 ipad-vertical:w-12 ipad-vertical:h-12 rounded-full bg-primary flex justify-center items-center">
           <svg
             width="18"
             height="19"
@@ -42,7 +44,9 @@ const HeadingButtonList: React.FC = () => {
             />
           </svg>
         </div>
-        <BodyMediumMedium className="text-white">Filter</BodyMediumMedium>
+        <BodyMediumMedium className="text-white hidden ipad-vertical:block">
+          Filter
+        </BodyMediumMedium>
       </div>
     </div>
   );

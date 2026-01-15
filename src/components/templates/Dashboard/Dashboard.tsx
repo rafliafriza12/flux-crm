@@ -5,7 +5,7 @@ import StatisticsSection from "@/components/organisms/dashboard/StatisticsSectio
 
 const DashboardTemplate: React.FC = () => {
   return (
-    <Container className="w-full flex flex-col gap-7 items-center justify-center text-text dark:text-text-dark pt-0!">
+    <Container className="w-full flex flex-col gap-4 ipad-vertical:gap-7 items-center justify-center text-text dark:text-text-dark lg:pt-0!">
       <HeadingDashboard />
       <InformationSection />
       <StatisticsSection />
