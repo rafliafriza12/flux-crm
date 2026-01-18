@@ -83,7 +83,7 @@ function Header({ className }: HeaderProps) {
             <Icon
               name="menu-4-fill"
               size="lg"
-              className="text-text dark:text-text-dark text-2xl"
+              className=" text-2xl"
             />
           </button>
 
@@ -92,14 +92,14 @@ function Header({ className }: HeaderProps) {
               <Icon
                 name="search-line"
                 size="lg"
-                className="text-text dark:text-text-dark "
+                className=" "
               />
             </button>
             <button className="w-10 h-10 rounded-full flex items-center justify-center border border-border dark:border-border-dark">
               <Icon
                 name="notification-3-line"
                 size="lg"
-                className="text-text dark:text-text-dark"
+                className=""
               />
             </button>
             <div className="h-10 rounded-full flex items-center justify-center gap-1.5 bg-foreground dark:bg-foreground-dark pl-1 pr-2">
@@ -116,7 +116,7 @@ function Header({ className }: HeaderProps) {
               <Icon
                 name="arrow-down-s-line"
                 size="md"
-                className="text-text dark:text-text-dark"
+                className=""
               />
             </div>
           </div>
@@ -152,7 +152,7 @@ function Header({ className }: HeaderProps) {
                 fill="#9FE870"
               />
             </svg>
-            <span className="text-lg font-semibold text-text dark:text-text-dark">
+            <span className="text-lg font-semibold ">
               FluxCRM
             </span>
           </div>
@@ -164,7 +164,7 @@ function Header({ className }: HeaderProps) {
             <Icon
               name="layout-right-2-line"
               size="lg"
-              className="text-text dark:text-text-dark"
+              className=""
             />
           </button>
         </div>
@@ -181,7 +181,7 @@ function Header({ className }: HeaderProps) {
                       "flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors",
                       isActive
                         ? "bg-primary text-black"
-                        : "text-text dark:text-text-dark hover:bg-foreground dark:hover:bg-foreground-dark"
+                        : " hover:bg-foreground dark:hover:bg-foreground-dark"
                     )}
                   >
                     <Icon name={item.icon} size="lg" />
@@ -244,66 +244,76 @@ function Header({ className }: HeaderProps) {
         <div className="h-15 flex items-center p-1  rounded-full bg-foreground dark:bg-foreground-dark">
           <Link
             href={ROUTES.DASHBOARD}
-            className="rounded-full flex items-center gap-3 h-full px-4 hover:bg-[#204E4D]"
+            className={`rounded-full flex items-center gap-3 h-full px-4 hover:opacity-60 duration-200 ${
+              pathname === ROUTES.DASHBOARD ? "bg-secound text-white" : "text-black dark:text-white"
+            }`}
           >
             <Icon
               name="home-smile-2-line"
               size="lg"
-              className="text-text dark:text-text-dark"
+              className=""
             />
-            <BodyMediumMedium className=" text-text dark:text-text-dark">
+            <BodyMediumMedium>
               Dashboard
             </BodyMediumMedium>
           </Link>
           <Link
             href={ROUTES.ANALYTICS}
-            className="rounded-full flex items-center gap-3 h-full px-4 hover:bg-[#204E4D]"
+            className={`rounded-full flex items-center gap-3 h-full px-4 hover:opacity-60 duration-200 ${
+              pathname === ROUTES.ANALYTICS ? "bg-secound text-white" : "text-black dark:text-white"
+            }`}
           >
             <Icon
               name="bar-chart-2-line"
               size="lg"
-              className="text-text dark:text-text-dark"
+              className=""
             />
-            <BodyMediumMedium className=" text-text dark:text-text-dark">
-              Analiytics
+            <BodyMediumMedium>
+              Analytics
             </BodyMediumMedium>
           </Link>
           <Link
             href={ROUTES.PRODUCTS}
-            className="rounded-full flex items-center gap-3 h-full px-4 hover:bg-[#204E4D]"
+            className={`rounded-full flex items-center gap-3 h-full px-4 hover:opacity-60 duration-200 ${
+              pathname === ROUTES.PRODUCTS ? "bg-secound text-white" : "text-black dark:text-white"
+            }`}
           >
             <Icon
               name="function-line"
               size="lg"
-              className="text-text dark:text-text-dark"
+              className=""
             />
-            <BodyMediumMedium className=" text-text dark:text-text-dark">
+            <BodyMediumMedium>
               Products
             </BodyMediumMedium>
           </Link>
           <Link
             href={ROUTES.INVOICES}
-            className="rounded-full flex items-center gap-3 h-full px-4 hover:bg-[#204E4D]"
+            className={`rounded-full flex items-center gap-3 h-full px-4 hover:opacity-60 duration-200 ${
+              pathname === ROUTES.INVOICES ? "bg-secound text-white" : "text-black dark:text-white"
+            }`}
           >
             <Icon
               name="file-copy-2-line"
               size="lg"
-              className="text-text dark:text-text-dark"
+              className=""
             />
-            <BodyMediumMedium className=" text-text dark:text-text-dark">
+            <BodyMediumMedium>
               Invoices
             </BodyMediumMedium>
           </Link>
           <Link
             href={ROUTES.CALENDAR}
-            className="rounded-full flex items-center gap-3 h-full px-4 hover:bg-[#204E4D]"
+            className={`rounded-full flex items-center gap-3 h-full px-4 hover:opacity-60 duration-200 ${
+              pathname === ROUTES.CALENDAR ? "bg-secound text-white" : "text-black dark:text-white"
+            }`}
           >
             <Icon
               name="calendar-check-line"
               size="lg"
-              className="text-text dark:text-text-dark"
+              className=""
             />
-            <BodyMediumMedium className=" text-text dark:text-text-dark">
+            <BodyMediumMedium>
               Calendar
             </BodyMediumMedium>
           </Link>

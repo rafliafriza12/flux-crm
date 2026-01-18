@@ -1,9 +1,7 @@
 import {
-  BodyMediumMedium,
   BodyMediumRegular,
   Heading1,
 } from "@/components/atoms";
-import { DropdownButton } from "@/components/atoms/DropdownButton/DropdownButton";
 import HeadingButtonList from "@/components/molecules/dashboard/HeadingButtonList";
 
 const HeadingDashboard: React.FC = () => {

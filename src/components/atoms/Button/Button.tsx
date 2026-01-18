@@ -9,7 +9,7 @@ import { BodyMediumRegular, BodySmallRegular } from "../Text";
  */
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg font-medium transition-colors focus-visible:outline-none disabled:cursor-not-allowed disabled:text-placeholder dark:disabled:text-placeholder-dark dark:disabled:bg-foreground-dark disabled:bg-foreground py-3 px-4 text-black",
+  "inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-lg font-medium transition-colors focus-visible:outline-none disabled:cursor-not-allowed disabled:text-placeholder dark:disabled:text-placeholder-dark dark:disabled:bg-foreground-dark disabled:bg-foreground py-3 px-4 text-black",
   {
     variants: {
       variant: {
