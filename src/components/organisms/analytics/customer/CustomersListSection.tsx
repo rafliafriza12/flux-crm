@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Icon, Avatar, Badge } from "@/components/atoms";
 import { BodyMediumMedium, BodyMediumRegular } from "@/components/atoms/Text/Typography";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
+import Modal2 from "@/components/molecules/Modal/Modal2";
 
 interface Customer {
   id: string;
@@ -17,6 +19,10 @@ interface Customer {
 
 const CustomersListSection = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [contextMenuCustomer, setContextMenuCustomer] = useState<string | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [customerToDelete, setCustomerToDelete] = useState<Customer | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Mock data based on the image
   const customers: Customer[] = [
@@ -126,6 +132,25 @@ const CustomersListSection = () => {
       customer.id.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const handleDeleteClick = (customer: Customer) => {
+    setCustomerToDelete(customer);
+    setIsDeleteModalOpen(true);
+    setContextMenuCustomer(null);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!customerToDelete) return;
+    
+    setIsDeleting(true);
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log("Customer deleted:", customerToDelete.id);
+    setIsDeleting(false);
+    setIsDeleteModalOpen(false);
+    setCustomerToDelete(null);
+    // Here you would normally refetch the data or remove from state
+  };
+
   return (
     <div className="w-full bg-background dark:bg-background-dark border border-greyscale-100-light dark:border-greyscale-100-dark rounded-2xl py-6">
       {/* Header */}
@@ -196,7 +221,8 @@ const CustomersListSection = () => {
             {filteredCustomers.map((customer, index) => (
               <tr
                 key={`${customer.id}-${index}`}
-                className={`${index % 2 === 0 ? "bg-white dark:bg-black" : "bg-greyscale-250-light dark:bg-greyscale-25-dark"} dark:text-white text-black`}
+                className={`${index % 2 === 0 ? "bg-white dark:bg-black" : "bg-greyscale-250-light dark:bg-greyscale-25-dark"} dark:text-white text-black cursor-pointer hover:bg-greyscale-50-light dark:hover:bg-greyscale-50-dark transition-colors`}
+                onClick={() => window.location.href = `/analytics/customer/${customer.id.replace("#", "")}`}
               >
                 <td className="py-4 px-4">
                   <BodyMediumRegular>
@@ -242,16 +268,103 @@ const CustomersListSection = () => {
                     {customer.phoneNumber}
                   </BodyMediumRegular>
                 </td>
-                <td className="py-4 px-4">
-                  <button className="text-neutral-text hover:text-black dark:hover:text-white duration-200">
-                    <Icon name="more-2-fill" size="lg" />
-                  </button>
+                <td className="py-4 px-4" onClick={(e) => e.stopPropagation()}>
+                  <div className="relative">
+                    <button
+                      className="text-neutral-text hover:text-black dark:hover:text-white duration-200"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setContextMenuCustomer(
+                          contextMenuCustomer === `${customer.id}-${index}` ? null : `${customer.id}-${index}`
+                        );
+                      }}
+                    >
+                      <Icon name="more-2-fill" size="lg" />
+                    </button>
+
+                    {/* Context Menu */}
+                    {contextMenuCustomer === `${customer.id}-${index}` && (
+                      <div className="absolute right-0 top-full mt-2 bg-greyscale-50-light dark:bg-greyscale-50-dark border border-greyscale-100-light dark:border-greyscale-100-dark rounded-lg shadow-lg z-10 min-w-[120px] overflow-hidden">
+                        <Link
+                          href={`/analytics/customer/${customer.id.replace("#", "")}`}
+                          className="w-full px-4 py-2.5 text-left text-black dark:text-white hover:opacity-50 duration-200 flex items-center gap-2"
+                        >
+                          <Icon name="eye-line" size="sm" />
+                          <span className="text-sm">Detail</span>
+                        </Link>
+                        <Link
+                          href={`/analytics/customer/${customer.id.replace("#", "")}/edit`}
+                          className="w-full px-4 py-2.5 text-left text-black dark:text-white hover:opacity-50 duration-200 flex items-center gap-2"
+                        >
+                          <Icon name="edit-line" size="sm" />
+                          <span className="text-sm">Edit</span>
+                        </Link>
+                        <button 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteClick(customer);
+                          }}
+                          className="w-full px-4 py-2.5 text-left text-[#EF4444] hover:opacity-50 duration-200 flex items-center gap-2"
+                        >
+                          <Icon name="delete-bin-line" size="sm" />
+                          <span className="text-sm">Delete</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <Modal2 close={() => setIsDeleteModalOpen(false)} isOpen={isDeleteModalOpen}>
+        <>
+          <div
+            onClick={() => setIsDeleteModalOpen(false)}
+            className="absolute z-1 top-6 right-6 cursor-pointer"
+          >
+            <Icon
+              name="close-line"
+              size="xl"
+              className="text-black dark:text-white"
+            />
+          </div>
+          <div className="w-25 h-25 flex justify-center items-center rounded-full bg-error">
+            <Icon name="delete-bin-fill" className="text-white text-[42px]" />
+          </div>
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold text-black dark:text-white mb-4">
+              Delete Customer ?
+            </h2>
+            <p className="text-neutral-text">
+              Are you sure want to delete customer ?
+            </p>
+            <p className="text-black dark:text-white font-medium mt-1">
+              {customerToDelete?.name}
+            </p>
+          </div>
+          <div className="flex items-center gap-4 w-full">
+            <button
+              onClick={() => setIsDeleteModalOpen(false)}
+              type="button"
+              className="flex-1 px-6 py-3 rounded-full border border-greyscale-100-light dark:border-greyscale-100-dark text-black dark:text-white hover:bg-greyscale-50-light dark:hover:bg-greyscale-50-dark transition-colors"
+            >
+              <BodyMediumMedium>Cancel</BodyMediumMedium>
+            </button>
+            <button
+              onClick={handleConfirmDelete}
+              disabled={isDeleting}
+              type="button"
+              className="flex-1 px-6 py-3 rounded-full bg-alert-error-25 text-error hover:opacity-75 duration-200 disabled:opacity-50"
+            >
+              <BodyMediumMedium>{isDeleting ? "Deleting..." : "Yes, Delete"}</BodyMediumMedium>
+            </button>
+          </div>
+        </>
+      </Modal2>
     </div>
   );
 };

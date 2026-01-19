@@ -53,7 +53,7 @@ function UserCard({
           >
             {user.name}
           </p>
-          {showRole && (
+          {showRole && user.role && (
             <Badge variant={roleColors[user.role]} size="xs">
               {user.role}
             </Badge>

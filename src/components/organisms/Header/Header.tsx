@@ -260,7 +260,7 @@ function Header({ className }: HeaderProps) {
           <Link
             href={ROUTES.ANALYTICS}
             className={`rounded-full flex items-center gap-3 h-full px-4 hover:opacity-60 duration-200 ${
-              pathname === ROUTES.ANALYTICS ? "bg-secound text-white" : "text-black dark:text-white"
+              pathname.includes(ROUTES.ANALYTICS) ? "bg-secound text-white" : "text-black dark:text-white"
             }`}
           >
             <Icon

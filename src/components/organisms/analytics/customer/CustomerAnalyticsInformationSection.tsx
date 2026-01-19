@@ -46,7 +46,7 @@ const CustomerAnalyticsInformationSection: React.FC = () => {
             <BodyMediumRegular className="text-[32px]! font-medium">
               {info.value}
             </BodyMediumRegular>
-            <div className="flex gap-1 items-center text-success bg-alert-success w-fit h-fit rounded-full p-1">
+            <div className="flex gap-1 items-center text-success bg-success-0-light dark:bg-success-0-dark border border-success-25-light dark:border-success-25-dark w-fit h-fit rounded-full p-1">
               <Icon name="arrow-up-line" className="text-success" />
               <span className="leading-none font-medium">
                 {info.percentage}

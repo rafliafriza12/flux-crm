@@ -1,4 +1,3 @@
-import { Heading1, Heading2 } from "@/components/atoms";
 import React from "react";
 
 const InformationStatisticCard = ({

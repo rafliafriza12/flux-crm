@@ -8,6 +8,7 @@ export interface User {
   email: string;
   name: string;
   avatar?: string;
+  role?: "admin" | "user" | "guest";
   createdAt: string;
   updatedAt: string;
 }

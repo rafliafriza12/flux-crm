@@ -1,16 +1,39 @@
+"use client";
+
 import { BodySmallMedium, Heading1 } from "@/components/atoms";
 import HeadingButtonList from "@/components/molecules/analytics/HeadingButtonList";
+import CustomerHeadingButtonList from "@/components/molecules/analytics/CustomerHeadingButtonList";
+import TaskHeadingButtonList from "@/components/molecules/analytics/TaskHeadingButtonList";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 
-const HeadingAnalytics: React.FC = () => {
-  const searchParams = useSearchParams();
-  const currentTab = searchParams.get("tab") || "all";
+interface HeadingAnalyticsProps {
+  variant?: "all" | "customer" | "task";
+  onAddNewTask?: () => void;
+}
+
+const HeadingAnalytics: React.FC<HeadingAnalyticsProps> = ({ variant = "all", onAddNewTask }) => {
+  const pathname = usePathname();
+
+  // Determine current tab based on pathname
+  const getCurrentTab = () => {
+    if (pathname === "/analytics/customer" || pathname.startsWith("/analytics/customer/")) {
+      return "customer";
+    }
+    if (pathname === "/analytics/task" || pathname.startsWith("/analytics/task/")) {
+      return "task";
+    }
+    return "all";
+  };
+
+  const currentTab = variant !== "all" ? variant : getCurrentTab();
+
   const tabs = [
     {
       name: "all",
       headingText: "Analytics",
       label: "All",
+      href: "/analytics",
       icon: (
         <svg
           width="18"
@@ -37,6 +60,7 @@ const HeadingAnalytics: React.FC = () => {
       name: "customer",
       headingText: "Customer",
       label: "Customer",
+      href: "/analytics/customer",
       icon: (
         <svg
           width="18"
@@ -63,6 +87,7 @@ const HeadingAnalytics: React.FC = () => {
       name: "task",
       headingText: "Task",
       label: "Task",
+      href: "/analytics/task",
       icon: (
         <svg
           width="18"
@@ -87,6 +112,17 @@ const HeadingAnalytics: React.FC = () => {
     },
   ];
 
+  const renderButtonList = () => {
+    switch (currentTab) {
+      case "customer":
+        return <CustomerHeadingButtonList />;
+      case "task":
+        return <TaskHeadingButtonList onAddNewTask={onAddNewTask} />;
+      default:
+        return <HeadingButtonList />;
+    }
+  };
+
   return (
     <div className="w-full flex justify-between items-center">
       <div className="flex items-center gap-6">
@@ -97,8 +133,8 @@ const HeadingAnalytics: React.FC = () => {
           {tabs.map((tab, index) => (
             <Link
               key={index}
-              href={`/analytics?tab=${tab.name}`}
-              className={`rounded-full py-2.5 px-4 flex items-center gap-3 min-w-32.5 w-32.5 justify-center ${currentTab === tab.name ? "bg-primary text-black" : "text-black dark:text-white"}`}
+              href={tab.href}
+              className={`rounded-full py-2.5 px-4 flex items-center gap-3 min-w-32.5 w-32.5 justify-center hover:opacity-50 duration-200 ${currentTab === tab.name ? "bg-primary text-black" : "text-black dark:text-white"}`}
             >
               {tab.icon}
               <BodySmallMedium>{tab.label}</BodySmallMedium>
@@ -107,7 +143,7 @@ const HeadingAnalytics: React.FC = () => {
         </div>
       </div>
 
-      <HeadingButtonList />
+      {renderButtonList()}
     </div>
   );
 };

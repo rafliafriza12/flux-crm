@@ -48,7 +48,7 @@ const ForgotPasswordForm: React.FC = () => {
           <Icon
             name="arrow-left-s-line"
             size="lg"
-            className="text-text dark:text-text-dark"
+            className="text-secound dark:text-primary"
           />
         </div>
         {getStepInterface()}

@@ -34,21 +34,27 @@ html.lenis body {
   --primary: #9fe870;
   --secound: #204e4d;
   --success: #40C4AA;
+  --error: #DF1C41;
+  --success-0-light: #EFFEFA;
+  --success-25-light: #DDF3EF;
   --neutral-text: #979797;
   --alert-success: #DDF3EF;
+  --alert-error-25: #FADBE1;
   --greyscale-0-light: #F8FAFB;
-  --greyscale-0-dark: #0D0D12;
-  --greyscale-100-dark: #36394A;
   --greyscale-100-light: #DFE1E7;
-  --greyscale-50-dark: #272835;
   --greyscale-50-light: #ECEFF3;
   --greyscale-25-light: #F6F8FA;
-  --greyscale-25-dark: #1A1B25;
   --text: #000000;
   --placeholder: #666d80;
   --border: #dfe1e7;
-
+  
   /* dark */
+  --greyscale-0-dark: #0D0D12;
+  --greyscale-25-dark: #1A1B25;
+  --greyscale-50-dark: #272835;
+  --greyscale-100-dark: #36394A;
+  --success-0-dark: #184E44;
+  --success-25-dark: #28806F;
   --background-dark: #1a1b25;
   --foreground-dark: #272835;
   --primary-dark: #9fe870;
@@ -67,6 +73,10 @@ html.lenis body {
   --color-text: var(--text);
   --color-secound: var(--secound);
   --color-success: var(--success);
+  --color-error: var(--error);
+  --color-alert-error-25: var(--alert-error-25);
+  --color-success-0-light: var(--success-0-light);
+  --color-success-25-light: var(--success-25-light);
   --color-alert-success: var(--alert-success);
   --color-greyscale-0-light: var(--greyscale-0-light);
   --color-greyscale-25-light: var(--greyscale-25-light);
@@ -80,6 +90,8 @@ html.lenis body {
   --color-background-dark: var(--background-dark);
   --color-foreground-dark: var(--foreground-dark);
   --color-primary-dark: var(--primary-dark);
+  --color-success-0-dark: var(--success-0-dark);
+  --color-success-25-dark: var(--success-25-dark);
   --color-greyscale-0-dark: var(--greyscale-0-dark);
   --color-greyscale-25-dark: var(--greyscale-25-dark);
   --color-greyscale-50-dark: var(--greyscale-50-dark);

@@ -43,7 +43,7 @@ const AnalyticsInformationSection = () => {
               </BodyMediumRegular>
               <div className="flex gap-1 items-center text-success bg-alert-success w-fit h-fit rounded-full p-1">
                 <Icon name="arrow-up-line" className="text-success" />
-                <span className="leading-none font-medium text-black dark:text-white">{info.percentage}</span>
+                <span className="leading-none font-medium text-success">{info.percentage}</span>
               </div>
               <p className="text-[#979797] font-medium">vs last years</p>
             </div>
